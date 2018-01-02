@@ -7,6 +7,7 @@ import errno
 import time
 import cv2
 import os
+from IPython import embed
 '''
   parsing and configuration
 '''
@@ -815,6 +816,20 @@ def stylize(content_img, style_imgs, init_img, frame=None):
 
         output_img = sess.run(net['input'])
 
+        # ================ save inner result ===================
+
+        # conv1_1 = sess.run(net['conv1_1'])
+        # conv2_1 = sess.run(net['conv2_1'])
+        # conv3_1 = sess.run(net['conv3_1'])
+        # conv4_1 = sess.run(net['conv4_1'])
+        # conv5_1 = sess.run(net['conv5_1'])
+        # embed()
+
+        # convs = [conv1_1, conv2_1, conv3_1, conv4_1, conv5_1]
+        # for index, conv in enumerate(convs):
+        #     print(f'[*] conv{index}.png')
+        #     write_image(".", f'conv{index}.png')
+
         if args.original_colors:
             output_img = convert_to_original_colors(
                 np.copy(content_img), output_img)
@@ -822,7 +837,8 @@ def stylize(content_img, style_imgs, init_img, frame=None):
         if args.video:
             write_video_output(frame, output_img)
         else:
-            write_image_output(output_img, content_img, style_imgs, init_img)
+            # write_image_output(output_img, content_img, style_imgs, init_img)
+            write_image(args.img_name, output_img)
 
 
 def minimize_with_lbfgs(sess, net, optimizer, init_img):
